@@ -1,0 +1,58 @@
+.wrapper{
+    text-align: center;
+    margin-top: 10vh;
+    width: 100vh;
+    margin-left: 70vh;
+    font-size: .9em;
+    font-family: cursive;
+    background-color: rgb(62, 55, 55);
+    padding: 20px 20px 20px 20px;
+    border-radius: 10px;
+}
+
+
+input{
+    margin-left: 50px;
+    display: inline;
+    font-size: .8em;
+    font-family: cursive;
+}
+
+body{
+    background-image: url('./img/sideWave.png');
+    color: #fff;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+.navBar{
+    padding-bottom: 15px;
+    background-color: darkgoldenrod;
+    font-size: 1.5em;
+    word-spacing: 1em;
+    font-weight: 500;
+    font-family: cursive;
+    padding-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 70vh;
+
+}
+
+.nav a{
+    text-decoration: none;
+    align-content: space-between;
+    align-items: center;
+    
+} 
+
+.nav a:hover{
+    color: brown;
+}
+
+p{
+    font-size: 2em;
+    font-family: cursive;
+}
+

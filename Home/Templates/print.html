@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Page</title>
+</head>
+<div class="navBar">
+    <nav class="nav">
+        <a href="#">Home</a>
+        <a href="#">Dashboard</a>
+        <a href="#">Payment</a>
+        <a href="#">Print Logs</a>
+        <a href="#">Logout</a>
+    </nav>
+    </div>
+<link rel="stylesheet" href="{% static 'css/print.css' %}">
+
+<body>
+    <div class="wrapper">
+        <fieldset>
+            <legend>Print Form</legend>
+            <input type="file" accept=".pdf">
+
+            <p>NOTE:
+                if you  want to upload another document you should refresh the page
+                <br><br>
+                Description <br>
+                <input type="radio" name="color">Colored
+                <input type="radio" name="color" checked>Black and white <br> <br>
+
+                Number of copies:     <select name="Page_copies" id="#">
+                    <option value="#">1</option>
+                    <option value="#">2</option>
+                    <option value="#">3</option>
+                    <option value="#">4</option>
+                    <option value="#">5</option>
+                    <option value="#">6</option>
+                </select>
+
+            </p>
+                <input type="submit" value="Upload">
+
+        </fieldset>
+    </div>
+</body>
+</html>
