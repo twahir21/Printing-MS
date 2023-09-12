@@ -77,9 +77,9 @@ WSGI_APPLICATION = 'PMS.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'printingDB',
+        'NAME': 'printing',
         'USER': 'postgres',
-        "PASSWORD": 'twahir',
+        "PASSWORD": "d'lonra",
         'HOST': '127.0.0.1',
         'PORT': '5432'
     }
@@ -134,3 +134,6 @@ MEDIAFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CRISPY_TEMPLATE_PACK = 'uni_form'
+

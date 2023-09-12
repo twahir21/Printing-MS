@@ -1,0 +1,238 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>userHome</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static "css/styles.css" %}">
+</head>
+<body class="userHome">
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+        <img src='{% static "img/logo.jpg" %}' width="30" height="30" class="d-inline-block align-top" alt="PMS">
+        Printing-MS
+        </a>
+    </nav>
+
+    <div class="row" style="height: 35rem;">
+        <div class="col-3">
+          <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>
+            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Logs</a>
+            <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Payment</a>
+            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Logout</a>
+          </div>
+        </div>
+        <div class="col-9">
+          <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                <div class="card mcard">
+                    <div class="card-header">
+                        <legend>Print Form</legend>
+                    </div>
+                    
+                    <div class="card-body">
+                        <h3>Attach Document:</h3>
+                        <form action="#" method="post">
+                            <div>
+                                <label for="file">Attach Doc:  </label>
+                                <input type="file" accept=".pdf" name="file">
+                            </div>
+                            
+                            <div>
+                                <p>NOTE:if you  want to upload another document you should refresh the page</p>    
+                            </div>
+                            <br>
+                            <div>
+                                <h3>Additional Information:</h3>
+                                <label for="form-check">Select Color: </label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="color" id="nocolour" value="option1" checked>
+                                    <label class="form-check-label" for="nocolour">
+                                        B&W
+                                    </label>
+                                  </div>
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="color" id="coloured" value="option2">
+                                    <label class="form-check-label" for="coloured">
+                                      colored
+                                    </label>
+                                  </div>
+                            </div>
+                            <br>
+                            <!-- <div>
+                                <label for="pages">Pages to be printed: </label>
+                                <textarea name="pages" id="pages" cols="30" rows="1"></textarea>
+                            </div> -->
+                            
+                            <div>
+                                <label for="Page_copies">Number of copies: </label>   
+                                <select name="Page_copies" id="#">
+                                    <option value="#">1</option>
+                                    <option value="#">2</option>
+                                    <option value="#">3</option>
+                                    <option value="#">4</option>
+                                    <option value="#">5</option>
+                                    <option value="#">6</option>
+                                </select>
+                            </div>
+                            <br>
+                            <div>
+                                <button type="submit" class="btn btn-outline-primary">Upload</button>
+                            </div>
+                        </form>
+                    </div>
+            
+                    
+                </div>
+            </div>
+            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                <div class="card mcard">
+                    <div class="card-header">
+                        <legend>Print Logs</legend>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-borderless table-hover">
+                            <thead>
+                              <tr>
+                                <th scope="col">Document</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Amount</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row">1</th>
+                                <td>colored</td>
+                                <td>20/08/2023</td>
+                                <td>printed</td>
+                                <td>200</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">2</th>
+                                <td>B&W</td>
+                                <td>03/09/2023</td>
+                                <td>pending</td>
+                                <td>1000</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">3</th>
+                                <td>B&W</td>
+                                <td>23/05/2023</td>
+                                <td>printed</td>
+                                <td>600</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <legend>Transactions Record</legend>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-borderless table-hover">
+                            <thead>
+                              <tr>
+                                <th scope="col">Document</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Amount-Paid</th>
+                                <th scope="col">Datetime</th>
+                                <th scope="col">Receipt</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row">1</th>
+                                <td>colored</td>
+                                <td>200</td>
+                                <td>20/08/2023</td>
+                                <td>jf34</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">2</th>
+                                <td>B&W</td>
+                                <td>1000</td>
+                                <td>03/09/2023</td>
+                                <td>fa98</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">3</th>
+                                <td>B&W</td>
+                                <td>600</td>
+                                <td>23/05/2023</td>
+                                <td>jk81</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <legend>Perform-Transaction</legend>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-borderless table-hover">
+                            <thead>
+                              <tr>
+                                <th scope="col">Document</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Amount-Payable</th>
+                                <th scope="col">Pay</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row">1</th>
+                                <td>colored</td>
+                                <td>200</td>
+                                <td><button type="button" class="btn btn-primary">Pay</button></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">2</th>
+                                <td>B&W</td>
+                                <td>1000</td>
+                                <td><button type="button" class="btn btn-primary">Pay</button></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">3</th>
+                                <td>B&W</td>
+                                <td>600</td>
+                                <td><button type="button" class="btn btn-primary">Pay</button></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                    </div>
+                </div>
+                <div class="">
+                    <p>Total Amount Remain: </p>
+                    <button type="button" class="btn btn-primary">Insert Money</button>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                <div class="card">
+                    <form action="{% url 'logout' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="logout" name="logout" id="logout">
+                            <button type="submit" class="btn btn-primary">logout</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer" style="text-align: center;">
+        Copyright &copy; 2023 &mdash; Team-DIT 
+      </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

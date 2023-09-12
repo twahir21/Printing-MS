@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forgot-Password</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="css/styles.css">
+	<link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}">
 </head>
 <body class="my-login-page">
 	<section class="h-100">
@@ -19,12 +19,19 @@
 					<div class="card fat">
 						<div class="card-body">
 							<h4 class="card-title">Forgot Password</h4>
-							<form method="POST" class="my-login-validation" action="">
+							<span>{{ status }}</span>
+							<form method="POST" class="my-login-validation" action="/forgotpassword/">
+								{% csrf_token %}
 								<div class="form-group">
-									<label for="email">E-Mail Address</label>
-									<input id="email" type="email" class="form-control" name="email" value="" required autofocus>
+									<label for="username">Username</label>
+									<input id="username" type="text" class="form-control" name="username" value="" required autofocus>
 									<div class="invalid-feedback">
-										Email is invalid
+										Username is invalid
+									</div>
+									<label for="npassword">New Password</label>
+									<input id="npassword" type="password" class="form-control" name="npassword" value="" required autofocus>
+									<div class="invalid-feedback">
+										Password too short
 									</div>
 									<div class="form-text text-muted">
 										By clicking "Reset Password" we will send a password reset link
