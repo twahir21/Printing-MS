@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from .models import User
+from .models import *
+from datetime import datetime
 
 # Create your views here.
 def Signin(request):
@@ -59,7 +60,50 @@ def forgotPassword(request):
     return render(request, "Home/Templates/forgot.html")
 
 def userHome(request):
+    if 'uname' in request.session:
+        data = {'name': request.session.get('uname')}
+        docs = Document.objects.all()
+        user = User.objects.get(username=request.session['uname'])
+
+        if 'doc_status' in request.session:
+            data['status'] = request.session['doc_status']
+
+        mdata = {'docs': docs, 'uname': user}
+        return render(request, 'Home/Templates/userHome.html', context=mdata)
+
+    else:
+        data = {'status': 'You need to login first'}
+        return Signin(request)
+
     return render(request, "Home/Templates/userHome.html")
 
+
+def adminHome(request):
+    return render(request, "Home/Templates/adminHome.html")
+
+def sendDocument(request):
+    if 'uname' in request.session:
+        if request.method == "POST":
+            file = request.POST.get("file")
+            color = request.POST.get("color")
+            number_of_copies = request.POST.get("Page_copies")
+
+            # now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            now = datetime.now()
+
+            try:
+                doc = Document.objects.get(file=file)
+                data = {'status': "document exists! Resend it?"}
+                return sendDocument(request)
+            except Exception as e:
+                user = User.objects.get(username=request.session['uname'])
+                doc = Document(name=user, file=file, document_color=color, number_of_copies=number_of_copies, date=now, user_id=user.user_id)
+                doc.save()
+                request.session['doc_status'] = "Success!!"
+                return userHome(request)
+
 def logout(request):
+    if 'uname' in request.session:
+        del request.session['uname']
+
     return render(request, "Home/Templates/login.html")
