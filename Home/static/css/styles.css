@@ -57,6 +57,47 @@ body.my-login-page {
 	text-align: center;
 }
 
+.card {
+	margin-top: 1rem;
+	margin-left: 1rem;
+	width: 50rem;
+	height: 34rem;
+}
+
+.card-header {
+	text-align: center;
+}
+
+.card-body {
+	text-align: center;
+	padding: 2rem 1rem;
+}
+
+.col-3 {
+	background-color: lightgray;
+	padding-top: 1rem;
+	padding-left: 2rem;
+}
+
+.navbar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 9999;
+}
+
+.row {
+	margin-top: 3rem;
+}
+
+.footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+}
+
 @media screen and (max-width: 425px) {
 	.my-login-page .card-wrapper {
 		width: 90%;
