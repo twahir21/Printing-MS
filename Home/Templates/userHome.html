@@ -4,16 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>userHome</title>
+    <title>USER</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static "css/styles.css" %}">
+    <link rel="stylesheet" href='{% static "css/styles.css" %}'>
 </head>
 <body class="userHome">
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="#">
-        <img src='{% static "img/logo.jpg" %}' width="30" height="30" class="d-inline-block align-top" alt="PMS">
-        Printing-MS
+            <img src='{% static "img/logo.jpg" %}' width="30" height="30" class="d-inline-block align-top" alt="PMS">
+            Printing-MS
         </a>
+        <p style="text-align: right;">{{ uname }}</p>
     </nav>
 
     <div class="row" style="height: 35rem;">
@@ -28,17 +29,18 @@
         <div class="col-9">
           <div class="tab-content" id="v-pills-tabContent">
             <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                <div class="card mcard">
+                <div class="card">
                     <div class="card-header">
                         <legend>Print Form</legend>
                     </div>
                     
                     <div class="card-body">
                         <h3>Attach Document:</h3>
-                        <form action="#" method="post">
+                        <form action="{% url 'sendDocument' %}" method="POST">
+                            {% csrf_token %}
                             <div>
                                 <label for="file">Attach Doc:  </label>
-                                <input type="file" accept=".pdf" name="file">
+                                <input type="file" accept=".pdf" name="file" id="file">
                             </div>
                             
                             <div>
@@ -48,7 +50,7 @@
                             <div>
                                 <h3>Additional Information:</h3>
                                 <label for="form-check">Select Color: </label>
-                                <div class="form-check">
+                                <div class="form-check" id="form-check">
                                     <input class="form-check-input" type="radio" name="color" id="nocolour" value="option1" checked>
                                     <label class="form-check-label" for="nocolour">
                                         B&W
@@ -69,7 +71,7 @@
                             
                             <div>
                                 <label for="Page_copies">Number of copies: </label>   
-                                <select name="Page_copies" id="#">
+                                <select name="Page_copies" id="page_copies">
                                     <option value="#">1</option>
                                     <option value="#">2</option>
                                     <option value="#">3</option>
@@ -96,36 +98,28 @@
                     <div class="card-body">
                         <table class="table table-borderless table-hover">
                             <thead>
-                              <tr>
-                                <th scope="col">Document</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Amount</th>
-                              </tr>
+                               <tr>
+                                  <th scope="col">S/N</th>
+                                  <th scope="col">Document</th>
+                                  <th scope="col">Color</th>
+                                   <th scope="col">#_Copies</th>
+                                  <th scope="col">Date</th>
+                                  <th scope="col">Status</th>
+                                  <th scope="col">Amount</th>
+                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>colored</td>
-                                <td>20/08/2023</td>
-                                <td>printed</td>
-                                <td>200</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">2</th>
-                                <td>B&W</td>
-                                <td>03/09/2023</td>
-                                <td>pending</td>
-                                <td>1000</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">3</th>
-                                <td>B&W</td>
-                                <td>23/05/2023</td>
-                                <td>printed</td>
-                                <td>600</td>
-                              </tr>
+                            {% for e in docs %}
+                               <tr>
+                                  <td>{{ forloop.counter }}</td>
+                                  <td>{{ e.file }}</td>
+                                  <td>{{ e.document_color }}</td>
+                                  <td>{{ e.number_of_copies }}</td>
+                                  <td>{{ e.date }}</td>
+                                  <td>printed</td>
+                                  <td>200</td>
+                               </tr>
+                            {% endfor %}
                             </tbody>
                           </table>
                     </div>

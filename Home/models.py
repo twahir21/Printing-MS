@@ -7,20 +7,28 @@ time = timezone
 # Create your models here.
 
 class User(models.Model):
-    class Role(models.TextChoices):
-        ADMIN = "ADMIN", "Admin"
-        USER = "USER", "User"
-    
-    Uid = models.UUIDField(primary_key=True, unique=True, editable=False, default=uuid.uuid4)
-    base_role = Role.ADMIN
-    role = models.CharField(max_length=50, choices=Role.choices)
+    Uid = models.UUIDField(unique=True, editable=False, default=uuid.uuid4)
+    user_id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=20, unique=True)
     email = models.EmailField(max_length=50)
     contacts = models.IntegerField(blank=False)
     password = models.CharField(max_length=15)
 
+    REQUIRED_FIELDS = ["email", "contacts", "password"]
+    USERNAME_FIELD = "username"
 
-    REQUIRED_FIELDS = ["email", "contacts", "password", "re_password"]
+    def __str__(self) -> str:
+        return self.username
+
+class Admin(models.Model):
+    aid = models.UUIDField(unique=True, editable=False, default=uuid.uuid4)
+    admin_id = models.AutoField(primary_key=True)
+    username = models.CharField(max_length=20, unique=True)
+    email = models.EmailField(max_length=50)
+    contacts = models.IntegerField(blank=False)
+    password = models.CharField(max_length=15)
+
+    REQUIRED_FIELDS = ["email", "contacts", "password"]
     USERNAME_FIELD = "username"
 
     def __str__(self) -> str:
@@ -28,15 +36,25 @@ class User(models.Model):
 
 class Document(models.Model):
     document_id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    file = models.FileField()
     class Colors(models.TextChoices):
         COLORED = "Colored", "Colored"
         BLACK_AND_WHITE = "B&W", "Black_and_white"
     document_color = models.CharField(choices=Colors.choices, max_length=7)
-    number_of_copies = models.IntegerField()
-    pages_to_print = models.IntegerField()
+    class Number_of_copies(models.TextChoices):
+        ONE = "1", "1"
+        TWO = "2", "2"
+        THREE = "3", "3"
+        FOUR = "4", "4"
+        FIVE = "5", "5"
+        SIX = "6", "6"
+    number_of_copies = models.CharField(choices=Number_of_copies.choices, max_length=5)
+    # pages_to_print = models.IntegerField()
     date = models.DateTimeField()
-    amount = models.IntegerField()
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=30)
+    # amount = models.IntegerField()
+    # user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.CharField(max_length=100)
 
 class Print_log(models.Model):
     printlog_id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
