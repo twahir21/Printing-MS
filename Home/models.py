@@ -7,8 +7,8 @@ time = timezone
 # Create your models here.
 
 class User(models.Model):
-    Uid = models.UUIDField(unique=True, editable=False, default=uuid.uuid4)
-    user_id = models.AutoField(primary_key=True)
+    # Uid = models.UUIDField(unique=True, editable=False, default=uuid.uuid4)
+    user_id = models.AutoField(primary_key=True, unique=True)
     username = models.CharField(max_length=20, unique=True)
     email = models.EmailField(max_length=50)
     contacts = models.IntegerField(blank=False)
@@ -21,8 +21,8 @@ class User(models.Model):
         return self.username
 
 class Admin(models.Model):
-    aid = models.UUIDField(unique=True, editable=False, default=uuid.uuid4)
-    admin_id = models.AutoField(primary_key=True)
+    # aid = models.UUIDField(unique=True, editable=False, default=uuid.uuid4)
+    admin_id = models.AutoField(primary_key=True, unique=True)
     username = models.CharField(max_length=20, unique=True)
     email = models.EmailField(max_length=50)
     contacts = models.IntegerField(blank=False)
@@ -35,7 +35,7 @@ class Admin(models.Model):
         return self.username
 
 class Document(models.Model):
-    document_id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    document_id = models.AutoField(primary_key=True, unique=True)
     file = models.FileField()
     class Colors(models.TextChoices):
         COLORED = "Colored", "Colored"
@@ -53,32 +53,32 @@ class Document(models.Model):
     date = models.DateTimeField()
     name = models.CharField(max_length=30)
     # amount = models.IntegerField()
-    # user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    user_id = models.CharField(max_length=100)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    
 
 class Print_log(models.Model):
-    printlog_id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    printlog_id = models.AutoField(primary_key=True, unique=True)
     status = models.CharField(max_length=20)
     time = models.DateTimeField()
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     document_id = models.ForeignKey(Document, on_delete=models.CASCADE)
 
 class Notification(models.Model):
-    notification_id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    notification_id = models.AutoField(primary_key=True, unique=True)
     message = models.CharField(max_length=30)
     time = models.DateTimeField()
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     printlog_id = models.ForeignKey(Print_log, on_delete=models.CASCADE)
 
 class Payment_Receipt(models.Model):
-    receipts_id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    receipts_id = models.AutoField(primary_key=True, unique=True)
     amount_remaining = models.IntegerField()
     date = models.DateTimeField()
     document_id = models.ForeignKey(Document, on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Print_Queue(models.Model):
-    printqueue_id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True, editable=False)
+    printqueue_id = models.AutoField(primary_key=True, unique=True)
     printlog_id = models.ForeignKey(Print_log, on_delete=models.CASCADE)
     document_id = models.ForeignKey(Document, on_delete=models.CASCADE)
     

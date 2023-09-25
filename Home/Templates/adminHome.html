@@ -14,7 +14,7 @@
             <img src='{% static "img/logo.jpg" %}' width="30" height="30" class="d-inline-block align-top" alt="PMS">
             Printing-MS
         </a>
-<!--        <p style="text-align: right;">{{ uname }}</p>-->
+        <p style="text-align: right;">{{ aname }}</p>
     </nav>
 
     <div class="row" style="height: 35rem;">
@@ -29,11 +29,61 @@
         <div class="col-9">
             <div class="tab-content" id="v-pills-tabContent">
                 <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                    <h1>1</h1>
+                    <div class="card">
+                        <div class="card-header">
+                            Admin Dashboard
+                        </div>
+                        <div class="card-body">
+                            Stationary Name.
+                        </div>
+                    </div>
                 </div>
 
                 <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                    <h1>2</h1>
+                    <div class="card">
+                    <div class="card-header">
+                        <legend>Print Queue</legend>
+                    </div>
+                    <div class="card-body">
+
+                        <table class="table table-borderless table-hover">
+                            <thead>
+                               <tr>
+                                  <th scope="col">S/N</th>
+                                  <th scope="col">Username</th>
+                                  <th scope="col">Contacts</th>
+                                   <th scope="col">email</th>
+                                  <th scope="col">Document</th>
+                                   <th scope="col">Doc_Color</th>
+                                   <th scope="col">#_copies</th>
+                                   <th scope="col">Is_paid</th>
+                                   <th scope>Status</th>
+                               </tr>
+                            </thead>
+                            <tbody>
+                                {% for e in docs %}
+                               <tr>
+                                  <td>{{ forloop.counter }}</td>
+                                  <td>{{ e.name }}</td>
+                                  <td>{{ e.user_id.contacts }}</td>
+                                  <td>{{ e.user_id.email }}</td>
+                                  <td>{{ e.file }}</td>
+                                  <td>{{ e.document_color }}</td>
+                                   <td>{{ e.number_of_copies }}</td>
+                                  <td>Yes</td>
+                                   <td>
+                                       <form action="/adminHome/" method="post" enctype="multipart/form-data">
+                                           {% csrf_token %}
+                                           <button type="submit" class="btn btn-primary" onclick="{{ printer }}">Print</button>
+                                       </form>
+                                   </td>
+                               </tr>
+                                {% endfor %}
+                            </tbody>
+                          </table>
+
+                    </div>
+                </div>
                 </div>
 
                 <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
