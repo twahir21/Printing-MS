@@ -20,7 +20,7 @@
 						<div class="card-body">
 							<h4 class="card-title" style="text-align: center;">Register</h4>
 							<span>{{ status }}</span>
-							<form method="POST" class="my-login-validation" action="/signup/">
+							<form method="POST" class="my-login-validation" action="{% url 'signup' %}">
 								{% csrf_token %}
 								<div class="form-group">
 									<label for="name">Username:</label>

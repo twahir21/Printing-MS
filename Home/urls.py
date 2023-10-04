@@ -13,4 +13,6 @@ urlpatterns = [
     path('adminSignup/', views.adminSignup, name="adminSignup"),
 
     path('sendDocument/', views.sendDocument, name="sendDocument"),
+    path('pdf/<int:pk>/', views.view_pdf, name='view_pdf'),
+    path('download_pdf/<int:document_id>/', views.download_pdf, name="download_pdf"),
 ]
