@@ -71,11 +71,18 @@
                                   <td>{{ e.document_color }}</td>
                                    <td>{{ e.number_of_copies }}</td>
                                   <td>Yes</td>
-                                   <td>
-                                       <form action="/adminHome/" method="post" enctype="multipart/form-data">
-                                           {% csrf_token %}
-                                           <button type="submit" class="btn btn-primary" onclick="{{ printer }}">Print</button>
-                                       </form>
+                                   <td>  
+                                    <button class="btn btn-primary" onclick="printPDF()">Print</button>
+                                    <script>
+                                        function printPDF() {
+                                            var pdfUrl = "{% url 'download_pdf' document_id=pdf_document.document_id %}";
+                                            var pdfWindow = window.open(pdfUrl, '_blank');
+                                            pdfWindow.onload = function () {
+                                                pdfWindow.print();
+                                                pdfWindow.close();
+                                            };
+                                        }
+                                    </script>               
                                    </td>
                                </tr>
                                 {% endfor %}

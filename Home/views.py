@@ -1,26 +1,33 @@
+import os
+from click import File
+
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponse, FileResponse
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
 from datetime import datetime
 import pyprinter
+import mimetypes
 
 # Create your views here.
 def Signin(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         username = request.POST.get("username")
-        password = request.POST.get('password')
+        password = request.POST.get("password")
 
         try:
             user = User.objects.get(username=username)
-            if user.password == password:
+
+            if (user.password == password):
                 request.session['uname'] = username
                 return userHome(request)
-            # else:
-            #
+            else:
+                data = {'status': "Incorrect password"}
+                return render(request, "Home/Templates/signup.html", context=data)
         except Exception as e:
-            data = {'status': "user doesn't exist"}
-            return Signup(request)
+            data = {'status': "username doesn't exist!"}
+            return render(request, "Home/Templates/signup.html", context=data)
 
     return render(request, "Home/Templates/login.html")
 
@@ -32,6 +39,7 @@ def adminLogin(request):
             admin = Admin.objects.get(username=username)
             if admin.password == password:
                 request.session['aname'] = username
+                # login(request, admin)
                 return adminHome(request)
             else:
                 data = {'status': "wrong Credentials"}
@@ -43,20 +51,23 @@ def adminLogin(request):
 
 
 def Signup(request):
-    if request.method == "POST":
-        username = request.POST.get("name")
+    if request.method == 'POST':
+        uname = request.POST.get("name")
         email = request.POST.get("email")
         contacts = request.POST.get("contacts")
         password = request.POST.get("password")
         re_password = request.POST.get("re-password")
 
         if(password == re_password):
-            user = User(username=username,email=email,contacts=contacts,password=password)
+            user = User(username=uname, email=email, contacts=contacts, password=password)
             user.save()
-            request.session['uname'] = username
+            request.session['uname'] = uname
+            # login(request, user=user)
             return userHome(request)
         else:
-            return render(request, "Home/Templates/signup.html")
+            data = {'status': "passwords didn't match"}
+            return render(request, "Home/Templates/signup.html", context=data)
+
     return render(request, "Home/Templates/signup.html")
 
 
@@ -68,10 +79,11 @@ def adminSignup(request):
         password = request.POST.get("password")
         re_password = request.POST.get("re-password")
 
-        if(password == re_password):
-            admin = Admin(username=username,email=email,contacts=contacts,password=password)
+        if password == re_password:
+            admin = Admin(username=username, email=email, contacts=contacts, password=password)
             admin.save()
             request.session['aname'] = username
+            # login(request, admin)
             return adminHome(request)
         else:
             return render(request, "Home/Templates/signup.html")
@@ -99,32 +111,16 @@ def forgotPassword(request):
 def userHome(request):
     if 'uname' in request.session:
         user = User.objects.get(username=request.session['uname'])
-        docs = Document.objects.values().all()
+        docs = Document.objects.all()
         data = {'docs': docs, 'uname': user}
+
         return render(request, 'Home/Templates/userHome.html', context=data)
 
-        # if 'doc_status' in request.session:
-        #     data['status'] = request.session['doc_status']
 
-        # if docs.name == user.username:
-        #     user_docs = Document.objects.values('document_color','file','number_of_copies','date').all()
-        #     data = {'docs': user_docs, 'uname': user}
-        #     return render(request, 'Home/Templates/userHome.html', context=data)
-        # else:
-        #     data = {'status': 'No document'}
-        #     return sendDocument(request)
-
-    else:
-        data = {'status': 'You need to login first'}
-        return Signin(request)
-
-    return render(request, "Home/Templates/userHome.html")
-
-@login_required
 def adminHome(request):
     if 'aname' in request.session:
         admin = Admin.objects.get(username=request.session['aname'])
-        docs = Document.objects.values().all()
+        docs = Document.objects.all()
         # printer = pyprinter.Printer(adminHome(docs))
         data = {'aname': admin, 'docs': docs}
         return render(request, "Home/Templates/adminHome.html", context=data)
@@ -155,10 +151,31 @@ def sendDocument(request):
                 doc.save()
                 request.session['doc_status'] = "Success!!"
                 return userHome(request)
+            
 
-@login_required
-def logout(request):
+def view_pdf(request, pk):
+    # Retrieve the model instance using the primary key (pk)
+    try:
+        instance = Document.objects.get(document_id=pk)
+    except Document.DoesNotExist:
+        # Handle the case where the object with the given pk does not exist
+        return render(request, 'Home/Templates/userHome.html', {'message': 'Object not found'})
+
+    # Pass the instance to the template
+    return render(request, 'Home/Templates/pdf_template.html', {'instance': instance})
+
+
+def download_pdf(request, document_id):
+    pdf_document = get_object_or_404(Document, document_id=document_id)
+    response = FileResponse(pdf_document.file.open('rb'))
+    return response
+
+
+def user_logout(request):
     if 'uname' in request.session:
         del request.session['uname']
-
-    return render(request, "Home/Templates/login.html")
+        return render(request, "Home/Templates/login.html")
+    
+    if 'aname' in request.session:
+        del request.session['aname']
+        return render(request, "Home/Templates/adminLogin.html")
